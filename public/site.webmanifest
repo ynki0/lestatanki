@@ -1,0 +1,24 @@
+{
+  "name": "Good Boost",
+  "short_name": "Good Boost",
+  "description": "Good Boost — буст аккаунтов, ЛБЗ, отметки и статистика в Мире танков.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "640x640",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "640x640",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

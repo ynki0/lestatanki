@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход в личный кабинет — Good Boost</title>
+  <meta name="description" content="Страница входа в личный кабинет Good Boost для клиентов сервиса.">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,max-image-preview:none">
+  <link rel="canonical" href="https://goodboost.top/login">
+  <link rel="icon" type="image/png" sizes="640x640" href="/favicon.png">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/css/main.css?v=20260413-split-1">
+  <link rel="stylesheet" href="/css/pages/auth.css?v=20260413-split-1">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div data-partial="/partials/navbar.html"></div>
+
+    <main class="page-main page-main--offset page-main--centered">
+      <div class="container auth-page-main">
+        <div class="auth-page">
+          <div class="auth-card">
+        <h2>Вход в аккаунт</h2>
+        <p class="subtitle">Введите ваши данные для входа</p>
+        <div class="alert alert-error" id="loginError"></div>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="mail@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Пароль</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Пароль" required>
+          </div>
+          <button type="button" class="auth-helper-link" id="forgotPasswordToggle">Забыли пароль?</button>
+          <button type="submit" class="btn btn-gold btn-block">Войти</button>
+        </form>
+        <div class="auth-inline-panel hidden" id="forgotPasswordPanel">
+          <div class="alert alert-error" id="forgotPasswordError"></div>
+          <div class="alert alert-success" id="forgotPasswordSuccess"></div>
+          <form id="forgotPasswordForm">
+            <div class="form-group">
+              <label for="forgotPasswordEmail">Email для восстановления</label>
+              <input type="email" class="form-control" id="forgotPasswordEmail" placeholder="mail@example.com" required>
+            </div>
+            <button type="submit" class="btn btn-outline btn-block">Отправить ссылку</button>
+          </form>
+        </div>
+          <div class="auth-footer">
+            Нет аккаунта? <a href="/register">Зарегистрироваться</a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+
+    <div data-partial="/partials/footer.html"></div>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/login.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

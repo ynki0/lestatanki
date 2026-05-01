@@ -1,0 +1,31 @@
+{
+  "name": "shop-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js",
+    "pm2:start": "pm2 start ecosystem.config.js --env production",
+    "pm2:restart": "pm2 restart ecosystem.config.js --env production --update-env",
+    "pm2:reload": "pm2 reload ecosystem.config.js --env production --update-env",
+    "deploy": "npm run check && npm run pm2:restart",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.6.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1",
+    "nodemailer": "^8.0.1",
+    "sharp": "^0.34.5",
+    "socket.io": "^4.8.3"
+  }
+}

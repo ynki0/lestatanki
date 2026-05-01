@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Панель администратора — Good Boost</title>
+  <meta name="description" content="Служебная административная панель Good Boost для управления заказами, пользователями и ценами.">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,max-image-preview:none">
+  <link rel="canonical" href="https://goodboost.top/admin">
+  <link rel="icon" type="image/png" sizes="640x640" href="/favicon.png">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/css/main.css?v=20260413-split-1">
+  <link rel="stylesheet" href="/css/pages/dashboard.css?v=20260413-split-1">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div data-partial="/partials/navbar.html"></div>
+
+    <main class="page-main page-main--offset">
+      <div class="container admin-page-main">
+        <div class="dashboard">
+      <div class="mobile-sidebar-toggle" onclick="toggleSidebar('adminSidebar')">
+        <i data-lucide="menu"></i> Меню
+      </div>
+      <div class="sidebar-overlay hidden" id="adminOverlay" onclick="toggleSidebar('adminSidebar')"></div>
+      <div class="dash-container">
+        <aside class="dash-sidebar" id="adminSidebar">
+          <div class="user-info">
+            <h4>Администратор</h4>
+            <p>Панель управления</p>
+          </div>
+          <nav class="dash-nav">
+            <a href="#" class="active" data-section="admin-stats">
+              <span class="nav-icon"><i data-lucide="bar-chart-3"></i></span> Статистика
+            </a>
+            <a href="#" data-section="admin-orders">
+              <span class="nav-icon"><i data-lucide="package"></i></span> Заказы
+            </a>
+            <a href="#" data-section="admin-users">
+              <span class="nav-icon"><i data-lucide="users"></i></span> Пользователи
+            </a>
+            <a href="#" data-section="admin-pricing">
+              <span class="nav-icon"><i data-lucide="dollar-sign"></i></span> Цены
+            </a>
+            <a href="#" data-section="admin-chat">
+              <span class="nav-icon"><i data-lucide="message-circle"></i></span>
+              <span>Live чат</span>
+              <span class="admin-chat-nav-badge hidden" id="adminChatNavBadge">0</span>
+            </a>
+            <a href="/" onclick="return true;">
+              <span class="nav-icon"><i data-lucide="log-out"></i></span> Выйти
+            </a>
+          </nav>
+        </aside>
+
+        <main class="dash-main">
+          <div class="dash-section active" id="admin-stats">
+            <h1>Статистика</h1>
+            <p class="subtitle">Обзор ключевых показателей</p>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="users"></i></div>
+                <div class="stat-value" id="statUsers">0</div>
+                <div class="stat-label">Пользователей</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="package"></i></div>
+                <div class="stat-value" id="statOrders">0</div>
+                <div class="stat-label">Заказов</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="wallet"></i></div>
+                <div class="stat-value" id="statPaid">0</div>
+                <div class="stat-label">Оплачено</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-section" id="admin-orders">
+            <h1>Все заказы</h1>
+            <p class="subtitle">Управление заказами клиентов</p>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Клиент</th>
+                    <th>Услуга</th>
+                    <th>Детали</th>
+                    <th>Сумма</th>
+                    <th>Оплата</th>
+                    <th>Статус</th>
+                    <th>Дата</th>
+                    <th>Действие</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="dash-section" id="admin-users">
+            <h1>Пользователи</h1>
+            <p class="subtitle">Управление базой пользователей • Всего: <span id="adminUsersCount">0</span></p>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Заказы</th>
+                    <th>Роль</th>
+                    <th>Дата</th>
+                    <th>Действие</th>
+                  </tr>
+                </thead>
+                <tbody id="adminUsersBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="dash-section" id="admin-pricing">
+            <h1>Цены</h1>
+            <p class="subtitle">Изменения сохраняются в базе и применяются на сайте</p>
+
+            <div class="calc-wrapper calc-wrapper-wide">
+              <div class="alert alert-success" id="pricingSuccess"></div>
+              <div class="alert alert-error" id="pricingError"></div>
+
+              <form id="pricingForm">
+                <h3 class="section-subtitle">Подставные бои</h3>
+                <div class="table-wrapper table-wrapper-spaced">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Уровень</th>
+                        <th class="col-220">Цена за бой (₽)</th>
+                        <th class="col-220">Мин. боёв</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>XI</td><td><input class="form-control" type="number" id="rigPrice0" min="0" step="1" title="Цена за бой для уровня XI"></td><td><input class="form-control" type="number" id="rigMin0" min="1" step="1" title="Минимальное количество боёв для уровня XI"></td></tr>
+                      <tr><td>X</td><td><input class="form-control" type="number" id="rigPrice1" min="0" step="1" title="Цена за бой для уровня X"></td><td><input class="form-control" type="number" id="rigMin1" min="1" step="1" title="Минимальное количество боёв для уровня X"></td></tr>
+                      <tr><td>IX</td><td><input class="form-control" type="number" id="rigPrice2" min="0" step="1" title="Цена за бой для уровня IX"></td><td><input class="form-control" type="number" id="rigMin2" min="1" step="1" title="Минимальное количество боёв для уровня IX"></td></tr>
+                      <tr><td>VIII</td><td><input class="form-control" type="number" id="rigPrice3" min="0" step="1" title="Цена за бой для уровня VIII"></td><td><input class="form-control" type="number" id="rigMin3" min="1" step="1" title="Минимальное количество боёв для уровня VIII"></td></tr>
+                      <tr><td>VII</td><td><input class="form-control" type="number" id="rigPrice4" min="0" step="1" title="Цена за бой для уровня VII"></td><td><input class="form-control" type="number" id="rigMin4" min="1" step="1" title="Минимальное количество боёв для уровня VII"></td></tr>
+                      <tr><td>VI</td><td><input class="form-control" type="number" id="rigPrice5" min="0" step="1" title="Цена за бой для уровня VI"></td><td><input class="form-control" type="number" id="rigMin5" min="1" step="1" title="Минимальное количество боёв для уровня VI"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 class="section-subtitle">Отметки на танке</h3>
+                <div class="grid admin-grid admin-grid-2 mb-18">
+                  <div class="form-group"><label for="markS1">0–65% (₽ за 1%)</label><input class="form-control" type="number" id="markS1" min="0" step="1" title="Стоимость 1 процента прогресса в диапазоне 0–65%"></div>
+                  <div class="form-group"><label for="markS2">65–85% (₽ за 1%)</label><input class="form-control" type="number" id="markS2" min="0" step="1" title="Стоимость 1 процента прогресса в диапазоне 65–85%"></div>
+                  <div class="form-group"><label for="markS3">85–95% (₽ за 1%)</label><input class="form-control" type="number" id="markS3" min="0" step="1" title="Стоимость 1 процента прогресса в диапазоне 85–95%"></div>
+                  <div class="form-group"><label for="markFull">Полный цикл 0–95% (₽, база)</label><input class="form-control" type="number" id="markFull" min="0" step="1" title="Базовая стоимость полного цикла 0–95%"></div>
+                  <div class="form-group"><label for="markModMedium">Надбавка (Средние) (₽ за сегмент)</label><input class="form-control" type="number" id="markModMedium" min="0" step="1" title="Надбавка за сегмент для средних танков"></div>
+                  <div class="form-group"><label for="markModHard">Надбавка (Сложные) (₽ за сегмент)</label><input class="form-control" type="number" id="markModHard" min="0" step="1" title="Надбавка за сегмент для сложных танков"></div>
+                </div>
+
+                <h3 class="section-subtitle">Буст WN8</h3>
+                <div class="grid admin-grid admin-grid-2 mb-10">
+                  <div class="form-group"><label for="wn8Price5000">WN8 5000+ (₽ за 10 боёв)</label><input class="form-control" type="number" id="wn8Price5000" min="0" step="1" title="Цена буста WN8 5000+ за 10 боёв"></div>
+                  <div class="form-group"><label for="wn8Price7000">WN8 7000+ (₽ за 10 боёв)</label><input class="form-control" type="number" id="wn8Price7000" min="0" step="1" title="Цена буста WN8 7000+ за 10 боёв"></div>
+                  <div class="form-group"><label for="wn8Price8500">WN8 8500+ (₽ за 10 боёв)</label><input class="form-control" type="number" id="wn8Price8500" min="0" step="1" title="Цена буста WN8 8500+ за 10 боёв"></div>
+                  <div class="form-group"><label for="wn8Price10000">WN8 10000+ (₽ за 10 боёв)</label><input class="form-control" type="number" id="wn8Price10000" min="0" step="1" title="Цена буста WN8 10000+ за 10 боёв"></div>
+                  <div class="form-group"><label for="wn8Price12000">WN8 12000+ (₽ за 10 боёв)</label><input class="form-control" type="number" id="wn8Price12000" min="0" step="1" title="Цена буста WN8 12000+ за 10 боёв"></div>
+                </div>
+                <div class="grid admin-grid admin-grid-2 mb-18">
+                  <div class="form-group"><label for="wn8MultRush">Множитель “без очереди”</label><input class="form-control" type="number" id="wn8MultRush" min="1" step="0.01" title="Множитель для заказа без очереди"></div>
+                  <div class="form-group"><label for="wn8MultSpecific">Множитель “конкретный танк”</label><input class="form-control" type="number" id="wn8MultSpecific" min="1" step="0.01" title="Множитель для заказа на конкретном танке"></div>
+                </div>
+
+                <h3 class="section-subtitle">ЛБЗ (личные боевые задачи)</h3>
+                <div class="grid admin-grid admin-grid-3 mb-18">
+                  <div class="form-group"><label for="lbzPrice1">Компания 1 (₽)</label><input class="form-control" type="number" id="lbzPrice1" min="0" step="1" title="Стоимость ЛБЗ для компании 1"></div>
+                  <div class="form-group"><label for="lbzPrice2">Компания 2 (₽)</label><input class="form-control" type="number" id="lbzPrice2" min="0" step="1" title="Стоимость ЛБЗ для компании 2"></div>
+                  <div class="form-group"><label for="lbzPrice3">Компания 3 (₽)</label><input class="form-control" type="number" id="lbzPrice3" min="0" step="1" title="Стоимость ЛБЗ для компании 3"></div>
+                </div>
+
+                <button type="submit" class="btn btn-gold btn-block">Сохранить цены</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="dash-section" id="admin-chat">
+            <h1>Live чат</h1>
+            <p class="subtitle">Общение с клиентами в реальном времени</p>
+            <div class="admin-chat-container">
+              <div class="admin-chat-list" id="adminChatList">
+                <div class="admin-chat-list-header">Диалоги</div>
+                <div class="admin-chat-items" id="adminChatItems">
+                  <p class="empty-state-text">Нет активных чатов</p>
+                </div>
+              </div>
+              <div class="admin-chat-window">
+                <div class="admin-chat-header" id="adminChatHeader">Выберите диалог</div>
+                <div class="admin-chat-messages" id="adminChatMessages"></div>
+                <div class="admin-chat-input">
+                  <input type="text" class="form-control" id="adminChatInput" placeholder="Напишите ответ..." disabled>
+                  <button class="btn btn-gold btn-sm" id="adminChatSend" disabled>Отправить</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </main>
+      </div>
+        </div>
+      </div>
+    </main>
+
+    <div data-partial="/partials/footer.html"></div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="/js/chat.js"></script>
+  <script>
+    document.addEventListener('auth:checked', () => {
+      if (typeof loadAdmin === 'function') loadAdmin();
+    });
+  </script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

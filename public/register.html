@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация аккаунта — Good Boost</title>
+  <meta name="description" content="Создание аккаунта Good Boost для оформления и отслеживания заказов.">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,max-image-preview:none">
+  <link rel="canonical" href="https://goodboost.top/register">
+  <link rel="icon" type="image/png" sizes="640x640" href="/favicon.png">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/css/main.css?v=20260413-split-1">
+  <link rel="stylesheet" href="/css/pages/auth.css?v=20260413-split-1">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div data-partial="/partials/navbar.html"></div>
+
+    <main class="page-main page-main--offset page-main--centered">
+      <div class="container auth-page-main">
+        <div class="auth-page">
+          <div class="auth-card">
+        <h2>Регистрация</h2>
+        <p class="subtitle">Создайте новый аккаунт</p>
+        <div class="alert alert-error" id="registerError"></div>
+        <div class="alert alert-success" id="registerSuccess"></div>
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="regName">Имя</label>
+            <input type="text" class="form-control" id="regName" placeholder="Ваше имя" required>
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input type="email" class="form-control" id="regEmail" placeholder="mail@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Пароль</label>
+            <input type="password" class="form-control" id="regPassword" placeholder="Минимум 6 символов" required>
+          </div>
+          <button type="submit" class="btn btn-gold btn-block">Создать аккаунт</button>
+        </form>
+          <div class="auth-footer">
+            Уже есть аккаунт? <a href="/login">Войти</a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+
+    <div data-partial="/partials/footer.html"></div>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
